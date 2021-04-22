@@ -11,52 +11,69 @@
 
 <body>
   <div class="container-fluid">
+
     <div class="jumbotron text-center">
       <h1>Mission to Mars</h1>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
     </div>
-    
+
     <div class="container">
       <h2>Latest Mars News</h2>
-      <h3>{{  data.news_title  }}</h3>
-      <p>{{  data.news_p  }}</p>
+      <h3>{{ data.news_title }}</h3>
+      <p>{{ data.news_p }}</p>
     </div>
 
     <div class="container">
       <div class='row'>
-        <div class="col-lg-8 col-md-8 col-sm-6 col-xm-12">
-        <h2>Featured Mars Image</h2>
-        <img src="{{ data.featured_image_url }}" alt="Featured Mars Image">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xm-12">
+          <h2>Featured Mars Image</h2>
+          <img src="{{ data.featured_image_url }}" class="img-responsive center-block d-block mx-auto" alt="Featured Mars Image">
         </div>
 
         <div class="col-lg-4 col-md-4 col-sm-6 col-xm-12"></div>
-          <h2>Mars Facts</h2>
-          <table>{{  data.mars_facts  }}</table>
-        </div>
+        <h2>Mars Facts</h2>
+        <table>{{ data.mars_facts|safe }}</table>
       </div>
     </div>
+  
+
     
-    <div class='card-deck'>
-      <div class='col-md-12'>
-          <div class="row">
-              {% for item in data.hemi_list %}
-              <div class="col-md-6">
-                  <div class="card text-white bg-dark" style="margin: 30px;">
-                      <img class="card-img-top" src="{{data.img_url}}" />
-                      <div class="card-body">
-                          <p class="card-text">{{ data.title }}</p>
-                      </div>
-                  </div>
-              </div>
-              {% endfor %}
-          </div>
-              
-
+    <div class='row'>
+      <div class="col-md-12">
+        <h2 class="text-center">Mars Hemispheres</h2>
       </div>
     </div>
 
+    <div class='row'>
+      <div class="col-md-3">
+        <img src="{{  data.hemi_list[0].img_url  }}" class="img-responsive center-block d-block mx-auto"/>
+          <div>
+            <p>{{ data.hemi_list[0]['title'] }}</p>
+          </div>
+      </div>
+      <div class="col-md-3">
+        <img src="{{  data.hemi_list[1]['img_url']  }}" class="img-responsive center-block d-block mx-auto"/>
+          <div>
+            <p>{{ data.hemi_list[1]['title'] }}</p>
+          </div>
+      </div>
+      <div class="col-md-3">
+        <img src="{{  data.hemi_list[2]['img_url']  }}" class="img-responsive center-block d-block mx-auto"/>
+          <div>
+            <p>{{ data.hemi_list[2]['title'] }}</p>
+          </div>
+      </div>
+      <div class="col-md-3">
+        <img src="{{  data.hemi_list[3]['img_url']  }}" class="img-responsive center-block d-block mx-auto"/>
+          <div>
+            <p>{{ data.hemi_list[3]['title'] }}</p>
+          </div>
+      </div>
+    </div>
+  
   </div>
-  </div>
+
+
 </body>
 
 </html>

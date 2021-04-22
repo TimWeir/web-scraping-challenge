@@ -19,7 +19,7 @@ def scrape():
     #URL definitions
     news_url = "https://redplanetscience.com/"
     browser.visit(news_url)
-    time.sleep(1)
+    #time.sleep(1)
 
     # Scrape page into Soup
     news_html = browser.html
@@ -29,10 +29,10 @@ def scrape():
     news_article = soup.find('div', id='news')
 
     # Get the latest article title
-    news_title = news_article.find('div', class_='content_title').get_text()
+    news_title = news_article.find('div', class_='content_title').text
 
     # Get the latest article title
-    news_p = news_article.find('div', class_='article_teaser_body').get_text()
+    news_p = news_article.find('div', class_='article_teaser_body').text
 
     mars_scrape['news_title'] = news_title
     mars_scrape['news_p'] = news_p
@@ -46,7 +46,7 @@ def scrape():
     #URL definitions
     image_url = "https://spaceimages-mars.com/"
     browser.visit(image_url)
-    time.sleep(1)
+    #time.sleep(1)
 
     # Scrape page into Soup
     image_html = browser.html
@@ -69,11 +69,11 @@ def scrape():
     #URL definitions
     facts_url = "https://galaxyfacts-mars.com/"
     browser.visit(facts_url)
-    time.sleep(1)
+    #time.sleep(1)
 
-    tables_df = pd.read_html(facts_url)[1]
-    #tables_df
-    mars_facts = tables_df.to_html(header=True)
+    tables_df = pd.read_html(facts_url)[0]
+    tables_df.columns = ['Description','Mars','Earth']
+    mars_facts = tables_df.to_html(index=False)
 
     mars_scrape['mars_facts'] = mars_facts
 
@@ -85,6 +85,7 @@ def scrape():
     ## Hemispheres
     #variables
     ints = [0,1,2,3]
+    base_url = 'https://marshemispheres.com/'
     url_list = ['https://marshemispheres.com/cerberus.html','https://marshemispheres.com/schiaparelli.html','https://marshemispheres.com/syrtis.html','https://marshemispheres.com/valles.html']
     hemi_list = []
     hemi_dict = {}
@@ -97,7 +98,7 @@ def scrape():
         #URL definitions
         hemi_url = url_list[i]
         browser.visit(hemi_url)
-        time.sleep(1)
+        #time.sleep(1)
 
         # Scrape page into Soup
         hemi_html = browser.html
@@ -110,7 +111,7 @@ def scrape():
         #find the image to be scraped
         hemi_image_path = hemi_img_find.find_all('img')[1]["src"]
         hemi_title = hemi_title_find.find_all('h2')[0].text
-        image_url = hemi_url + hemi_image_path
+        image_url = base_url + hemi_image_path
         hemi_dict = {'title': hemi_title,'img_url':image_url}
         hemi_list.append(hemi_dict)
     
